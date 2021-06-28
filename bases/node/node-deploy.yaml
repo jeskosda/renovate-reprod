@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      serverpod: node-service
+  template:
+    metadata:
+      labels:
+        serverpod: node-service
+    spec:
+      containers:
+        - name: node-service
+          image: node:15
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 2Mi
+              cpu: "0.00001"
+            limits:
+              cpu: "0.01"
+              memory: 32Mi
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          livenessProbe:
+            httpGet:
+              path: /?
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+      automountServiceAccountToken: false

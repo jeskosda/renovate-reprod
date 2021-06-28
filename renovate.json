@@ -1,0 +1,41 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    ":separateMajorReleases",
+    ":combinePatchMinorReleases",
+    ":ignoreUnstable",
+    ":prImmediately",
+    ":semanticPrefixFixDepsChoreOthers",
+    ":updateNotScheduled",
+    ":automergeDisabled",
+    ":ignoreModulesAndTests",
+    ":autodetectPinVersions",
+    ":prConcurrentLimitNone",
+    "group:monorepos",
+    "group:recommended",
+    "workarounds:all",
+    ":semanticCommits",
+    ":prHourlyLimitNone",
+    ":semanticCommitTypeAll(fix)"
+  ],
+  "commitMessageAction": "bump",
+  "labels": [
+    "dependencies"
+  ],
+  "kubernetes": {
+    "fileMatch": [
+      "^bases(.*\/).+\\.yaml$"
+    ]
+  },
+  "kustomize": {
+    "fileMatch": [
+      "^bases(.*\/)kustomization\\.yaml$"
+    ]
+  },
+  "hostRules": [
+    {
+      "matchHost": "https://api.github.com/repos/ORG-B/",
+      "token": "TOKEN"
+    }
+  ]
+}
